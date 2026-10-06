@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: notif-mongo
+    restart: unless-stopped  
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  localstack:
+    image: localstack/localstack:3
+    container_name: notif-localstack
+    restart: unless-stopped  
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sqs
+      - DEBUG=0
+      - DEFAULT_REGION=us-east-1
+    volumes:
+      - localstack-data:/var/lib/localstack
+
+volumes:
+  mongo-data:
+  localstack-data:

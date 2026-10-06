@@ -1,0 +1,31 @@
+{
+  "name": "notification-service",
+  "version": "1.0.0",
+  "description": "Multi-channel notification delivery service with idempotency, SQS-based retry, and DLQ fallback (TypeScript)",
+  "main": "dist/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "setup:queues": "ts-node scripts/createQueues.ts",
+    "worker:email": "ts-node-dev --respawn --transpile-only src/workers/worker.ts email",
+    "worker:sms": "ts-node-dev --respawn --transpile-only src/workers/worker.ts sms",
+    "worker:dlq": "ts-node-dev --respawn --transpile-only src/workers/dlqConsumer.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.658.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.6.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.15",
+    "@types/uuid": "^9.0.8",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4"
+  }
+}
